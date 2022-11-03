@@ -1,0 +1,95 @@
+* {
+    -fx-font-family: Georgia;
+    -fx-font-size: 14px;
+}
+
+.background {
+    -fx-background-color: #161616;
+    -fx-border-color: #FFB60C;
+    -fx-border-width: 1px;
+}
+
+.tab-header-background {
+    -fx-background-color: #FFB60C;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #161616;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #FFB60C;
+    -fx-focus-color: #FFB60C;
+}
+
+.tab .tab-label .text{
+    -fx-alignment: CENTER;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.tab .tab-label{
+    -fx-text-base-color: WHITE;
+}
+
+.tab:selected .tab-label {
+    -fx-text-fill: #1446A0;
+}
+
+.label .text {
+    -fx-font-size: 36px;
+}
+.toggle-button {
+    -fx-background-color: #FFB60C;
+}
+
+.toggle-button:hover {
+    -fx-border-color: #1446A0;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #0EB1D2;
+}
+
+.button {
+    -fx-background-color: #FFB60C;
+}
+.button .text{
+    -fx-font-size: 18px;
+}
+
+.button:hover {
+    -fx-border-color: #1446A0;
+    -fx-border-width: 4px;
+
+}
+
+.button:pressed {
+    -fx-background-color: #0EB1D2;
+}
+.combo-box{
+    -fx-background-color: #FFB60C;
+}
+
+.text-area {
+    -fx-border-color: #FFB60C;
+    -fx-border-width: 4px;
+}
+
+.text-field {
+    -fx-background-color: #FFB60C;
+}
+
+.check-box .box {
+    -fx-background-color: #FFB60C;
+}
+.check-box .text{
+    -fx-font-size: 14px;
+}
+.progress-bar {
+    -fx-accent: #1446A0;
+}
+
+.progress-bar .track {
+    -fx-background-color: #FFB60C;
+}
