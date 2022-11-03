@@ -11,8 +11,8 @@ public class DBManager {
         try {
             Statement myStmt= myConn.createStatement();
             
-            String sql = "select * from clothestable NATURAL JOIN shoestable NATURAL JOIN accessoriestable";
-
+            String sql = "select * from clothestable";
+            //NATURAL JOIN shoestable NATURAL JOIN accessoriestable
     
             ResultSet myRs= myStmt.executeQuery(sql);
             while (myRs.next()) {
@@ -44,7 +44,7 @@ public class DBManager {
     public Connection Connector(){
         try {
             Connection connection =
-                    DriverManager.getConnection("jdbc:mysql://localhost:3306/product?serverTimezone=Europe%2FParis", "root","root");
+                    DriverManager.getConnection("jdbc:mysql://localhost:3306/product?serverTimezone=Europe%2FParis", "root","password");
             return connection;
         }
         catch (Exception e) {

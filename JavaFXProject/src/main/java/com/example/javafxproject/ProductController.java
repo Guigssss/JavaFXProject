@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import java.util.List;
 
 public class ProductController implements Initializable {
+    DBManager manager;
     @FXML
     private Button B_Add;
 
@@ -40,10 +41,10 @@ public class ProductController implements Initializable {
     private ComboBox<String> CBox_ProductTypeStore;
 
     @FXML
-    private ListView<?> LV_Management;
+    private ListView<Product> LV_Management;
 
     @FXML
-    private ListView<?> LV_Store;
+    private ListView<Product> LV_Store;
 
     @FXML
     private Label L_TotalStore;
@@ -82,6 +83,34 @@ public class ProductController implements Initializable {
         productTypesValues.add("Accessories");
         ObservableList<String> productTypes = FXCollections.observableArrayList(productTypesValues);
         CBox_ProductTypeStore.setItems(productTypes);
-        //CBox_ProductTypeManagement.setItems(productTypes);
+        CBox_ProductTypeManagement.setItems(productTypes);
+
+        LV_Store.getSelectionModel().selectedItemProperty().addListener(e-> displayProductDetailsStore((Product) LV_Store.getSelectionModel().getSelectedItem()));
+        LV_Management.getSelectionModel().selectedItemProperty().addListener(e-> displayProductDetailsManagement((Product) LV_Management.getSelectionModel().getSelectedItem()));
+        manager = new DBManager();
+        fetchProducts();
+    }
+    private void displayProductDetailsStore(Product selectedProduct) {
+        if(selectedProduct!=null){
+            TF_ProductNameStore.setText(selectedProduct.getName());
+            TF_QuantityStore.setText(Integer.toString(selectedProduct.getNbItems()));
+            TF_PriceStore.setText(Double.toString(selectedProduct.getPrice()));
+        }
+    }
+    private void displayProductDetailsManagement(Product selectedProduct) {
+        if(selectedProduct!=null){
+            TF_ProductNameManagement.setText(selectedProduct.getName());
+            TF_QuantityManagement.setText(Integer.toString(selectedProduct.getNbItems()));
+            TF_PriceManagement.setText(Double.toString(selectedProduct.getPrice()));
+        }
+    }
+    public void fetchProducts(){
+        List<Product> listProducts = manager.loadProducts();
+        if(listProducts!=null){
+            ObservableList<Product> products;
+            products = FXCollections.observableArrayList(listProducts);
+            LV_Store.setItems(products);
+            LV_Management.setItems(products);
+        }
     }
 }
