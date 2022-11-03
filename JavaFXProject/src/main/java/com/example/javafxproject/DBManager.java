@@ -10,11 +10,25 @@ public class DBManager {
         Connection myConn= this.Connector();
         try {
             Statement myStmt= myConn.createStatement();
-            String sql = "select * from studenttable";
+            String sql = "select * from clothestable NATURAL JOIN shoestable NATURAL JOIN accessoriestable";
             ResultSet myRs= myStmt.executeQuery(sql);
             while (myRs.next()) {
-                Clothes c = new Clothes(myRs.getString("name"),myRs.getDouble("price"), myRs.getInt("nbItems"), myRs.getInt("size"));
-                productAll.add(c);
+                if(myRs.getInt("indic")==1) {
+                    Clothes c = new Clothes(myRs.getString("name"), myRs.getDouble("price"), myRs.getInt("nbItems"), myRs.getInt("size"));
+                    productAll.add(c);
+                }
+                else if (myRs.getInt("indic")==2){
+                    Shoes s = new Shoes(myRs.getString("name"), myRs.getDouble("price"), myRs.getInt("nbItems"), myRs.getInt("shoeSize"));
+                    productAll.add(s);
+                }
+                else if(myRs.getInt("indic")==3){
+                    Accessories a = new Accessories(myRs.getString("name"), myRs.getDouble("price"), myRs.getInt("nbItems"));
+                    productAll.add(a);
+                }
+                else{
+                    System.out.println("wrong type of product");
+                }
+
             }
             this.close(myConn, myStmt, myRs);
             return productAll;
@@ -27,7 +41,7 @@ public class DBManager {
     public Connection Connector(){
         try {
             Connection connection =
-                    DriverManager.getConnection("jdbc:mysql://localhost:3306/student?serverTimezone=Europe%2FParis", "root","password");
+                    DriverManager.getConnection("jdbc:mysql://localhost:3306/product?serverTimezone=Europe%2FParis", "root","root");
             return connection;
         }
         catch (Exception e) {
@@ -66,6 +80,112 @@ public class DBManager {
         }
         finally{
             close(myConn,myStmt,myRs);
+        }
+    }
+    public void addShoes(Shoes shoe){
+        Connection myConn=null;
+        PreparedStatement myStmt = null;
+        ResultSet myRs= null;
+        try {
+            myConn = this.Connector();
+            String sql = "INSERT INTO clothestable (name,price,nbItems,shoeSize) VALUES (?, ?, ?, ?)";
+            myStmt = myConn.prepareStatement(sql);
+            myStmt.setString(1, shoe.getName());
+            myStmt.setDouble(2, shoe.getPrice());
+            myStmt.setInt(3, shoe.getNbItems());
+            myStmt.setInt(4, shoe.getShoeSize());
+            myStmt.execute();
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            close(myConn,myStmt,myRs);
+        }
+    }
+    public void addAccessories(Accessories accessory){
+        Connection myConn=null;
+        PreparedStatement myStmt = null;
+        ResultSet myRs= null;
+        try {
+            myConn = this.Connector();
+            String sql = "INSERT INTO clothestable (name,price,nbItems) VALUES (?, ?, ?)";
+            myStmt = myConn.prepareStatement(sql);
+            myStmt.setString(1, accessory.getName());
+            myStmt.setDouble(2, accessory.getPrice());
+            myStmt.setInt(3, accessory.getNbItems());
+            myStmt.execute();
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            close(myConn,myStmt,myRs);
+        }
+    }
+    public void delete(String type, String name ){
+        Connection myConn=null;
+        PreparedStatement myStmt = null;
+        ResultSet myRs= null;
+        try {
+            myConn = this.Connector();
+            String sql = "DELETE FROM clothestable WHERE name = ?";
+            if(type=="Clothes");
+            else if (type=="Shoes") {
+                sql="DELETE FROM shoestable WHERE name = ?";
+            }
+            else if (type=="Accessories") {
+                sql="DELETE FROM accessoriestable WHERE name = ?";
+            }
+            myStmt = myConn.prepareStatement(sql);
+            myStmt.setString(1,name);
+            myStmt.execute();
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            close(myConn,myStmt,myRs);
+        }
+    }
+    public void update(String type, String name,int change ,boolean ajout ){
+        Connection myConn= this.Connector();
+        try {
+            String sql = "select name,nbItems from clothestable where name = ?";
+            if(type=="Shoes"){
+                sql="select name,nbItems from shoestable where name = ?";
+            } else if (type=="Accessories") {
+                sql="select name,nbItems from accessoriestable where name = ?";
+            }
+            PreparedStatement myStmt= myConn.prepareStatement(sql);
+            myStmt.setString(1,name);
+            ResultSet myRs= myStmt.executeQuery();
+            while(myRs.next()) {
+                if (ajout) {
+                    change += myRs.getInt("nbItems");
+                } else {
+                    if ((myRs.getInt("nbItems") - change) < 0) {
+                        System.out.println("Manque de stock");
+                        change = (myRs.getInt("nbItems"));
+                    } else {
+                        change = myRs.getInt("nbItems") - change;
+                    }
+                }
+            String sql2="update clothestable set nbItems = ? where name = ?";
+            if(type=="shoes"){
+                sql2="update shoestable set nbItems = ? where name = ?";
+            } else if (type=="accessories") {
+                sql2="update accessoriestable set nbItems = ? where name = ?";
+            }
+            myStmt=myConn.prepareStatement(sql2);
+            myStmt.setInt(1,change);
+            myStmt.setString(2,name);
+            myStmt.execute();
+            }
+            this.close(myConn, myStmt, myRs);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
