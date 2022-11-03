@@ -10,7 +10,7 @@ public class DBManager {
         Connection myConn= this.Connector();
         try {
             Statement myStmt= myConn.createStatement();
-            String sql = "select * from studenttable";
+            String sql = "select * from storetable";
             ResultSet myRs= myStmt.executeQuery(sql);
             while (myRs.next()) {
                 Clothes c = new Clothes(myRs.getString("name"),myRs.getDouble("price"), myRs.getInt("nbItems"), myRs.getInt("size"));

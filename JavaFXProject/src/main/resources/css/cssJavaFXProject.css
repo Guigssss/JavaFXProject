@@ -70,9 +70,6 @@
 .button:pressed {
     -fx-background-color: #0EB1D2;
 }
-.combo-box{
-    -fx-background-color: #FFB60C;
-}
 
 .text-area {
     -fx-border-color: #FFB60C;
