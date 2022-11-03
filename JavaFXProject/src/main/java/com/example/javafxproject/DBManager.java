@@ -10,7 +10,10 @@ public class DBManager {
         Connection myConn= this.Connector();
         try {
             Statement myStmt= myConn.createStatement();
+            
             String sql = "select * from clothestable NATURAL JOIN shoestable NATURAL JOIN accessoriestable";
+
+    
             ResultSet myRs= myStmt.executeQuery(sql);
             while (myRs.next()) {
                 if(myRs.getInt("indic")==1) {

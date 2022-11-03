@@ -1,6 +1,7 @@
 * {
     -fx-font-family: Georgia;
     -fx-font-size: 14px;
+    -fx-text-fill: WHITE;
 }
 
 .background {
@@ -8,7 +9,9 @@
     -fx-border-color: #FFB60C;
     -fx-border-width: 1px;
 }
-
+.anchor-pane{
+    -fx-background-color: #161616;
+}
 .tab-header-background {
     -fx-background-color: #FFB60C;
 }
@@ -37,7 +40,7 @@
 }
 
 .label .text {
-    -fx-font-size: 36px;
+    -fx-font-size: 14px;
 }
 .toggle-button {
     -fx-background-color: #FFB60C;
@@ -56,19 +59,16 @@
 }
 .button .text{
     -fx-font-size: 18px;
+    -fx-text-fill: BLACK;
 }
 
 .button:hover {
     -fx-border-color: #1446A0;
     -fx-border-width: 4px;
-
 }
 
 .button:pressed {
     -fx-background-color: #0EB1D2;
-}
-.combo-box{
-    -fx-background-color: #FFB60C;
 }
 
 .text-area {
