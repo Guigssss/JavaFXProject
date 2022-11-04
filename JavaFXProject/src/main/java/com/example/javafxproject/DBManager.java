@@ -10,28 +10,24 @@ public class DBManager {
         Connection myConn= this.Connector();
         try {
             Statement myStmt= myConn.createStatement();
-            
-            String sql = "select * from clothestable NATURAL JOIN shoestable NATURAL JOIN accessoriestable";
-
-    
+            String sql = "select * from clothestable";
             ResultSet myRs= myStmt.executeQuery(sql);
             while (myRs.next()) {
-                if(myRs.getInt("indic")==1) {
-                    Clothes c = new Clothes(myRs.getString("name"), myRs.getDouble("price"), myRs.getInt("nbItems"), myRs.getInt("size"));
-                    productAll.add(c);
-                }
-                else if (myRs.getInt("indic")==2){
-                    Shoes s = new Shoes(myRs.getString("name"), myRs.getDouble("price"), myRs.getInt("nbItems"), myRs.getInt("shoeSize"));
-                    productAll.add(s);
-                }
-                else if(myRs.getInt("indic")==3){
-                    Accessories a = new Accessories(myRs.getString("name"), myRs.getDouble("price"), myRs.getInt("nbItems"));
-                    productAll.add(a);
-                }
-                else{
-                    System.out.println("wrong type of product");
-                }
-
+                Clothes c = new Clothes(myRs.getString("name"), myRs.getDouble("price"), myRs.getInt("nbItems"), myRs.getInt("size"));
+                productAll.add(c);
+            }
+            sql = "select * from shoestable";
+            myRs= myStmt.executeQuery(sql);
+            while (myRs.next()) {
+                Shoes s = new Shoes(myRs.getString("name"), myRs.getDouble("price"), myRs.getInt("nbItems"), myRs.getInt("shoeSize"));
+                productAll.add(s);
+            }
+            sql = "select * from accessoriestable";
+            myRs= myStmt.executeQuery(sql);
+            while (myRs.next()) {
+                Accessories a = new Accessories(myRs.getString("name"), myRs.getDouble("price"), myRs.getInt("nbItems"));
+                System.out.println(a.toString());
+                productAll.add(a);
             }
             this.close(myConn, myStmt, myRs);
             return productAll;
