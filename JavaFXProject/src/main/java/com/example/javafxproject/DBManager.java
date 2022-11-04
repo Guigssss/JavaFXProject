@@ -87,7 +87,7 @@ public class DBManager {
         ResultSet myRs= null;
         try {
             myConn = this.Connector();
-            String sql = "INSERT INTO clothestable (name,price,nbItems,shoeSize) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO shoestable (name,price,nbItems,shoeSize) VALUES (?, ?, ?, ?)";
             myStmt = myConn.prepareStatement(sql);
             myStmt.setString(1, shoe.getName());
             myStmt.setDouble(2, shoe.getPrice());
@@ -108,7 +108,7 @@ public class DBManager {
         ResultSet myRs= null;
         try {
             myConn = this.Connector();
-            String sql = "INSERT INTO clothestable (name,price,nbItems) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO accessoriestable (name,price,nbItems) VALUES (?, ?, ?)";
             myStmt = myConn.prepareStatement(sql);
             myStmt.setString(1, accessory.getName());
             myStmt.setDouble(2, accessory.getPrice());
