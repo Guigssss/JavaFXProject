@@ -10,7 +10,6 @@ price DOUBLE,
 nbItems INTEGER,	
 size INTEGER,
 reduc DOUBLE DEFAULT 30,
-indic INTEGER DEFAULT 1,
 PRIMARY KEY (id)
 );
 
@@ -22,7 +21,6 @@ price DOUBLE,
 nbItems INTEGER,
 shoeSize INTEGER,
 reduc DOUBLE DEFAULT 20,
-indic INTEGER DEFAULT 2,
 PRIMARY KEY (id)
 );
 
@@ -33,8 +31,8 @@ name VARCHAR(40),
 price DOUBLE,
 nbItems INTEGER,
 reduc DOUBLE DEFAULT 50,
-indic INTEGER DEFAULT 3,
 PRIMARY KEY (id)
 );
 
+INSERT INTO product.accessoriestable values (1,"bruh",23.2,3,20);
 SELECT * FROM clothestable;
