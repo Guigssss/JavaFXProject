@@ -24,11 +24,7 @@ public class Shoes extends Product {
     }
     @Override
     public String toString() {
-        return "Shoes{" +"name='" + super.getName() + '\'' +
-                ", price=" + super.getPrice() +
-                ", nbItems=" + super.getNbItems() +
-                ", size=" + this.shoeSize +
-                '}';
+        return super.getName()+" - Price : "+super.getPrice()+" € Qty : "+super.getNbItems()+" Size : "+this.shoeSize;
     }
 
     @Override

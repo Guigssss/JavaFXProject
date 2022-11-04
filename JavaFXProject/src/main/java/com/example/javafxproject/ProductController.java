@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.List;
 
@@ -75,6 +76,13 @@ public class ProductController implements Initializable {
 
     @FXML
     private TextField TF_QuantityStore;
+
+    @FXML
+    private TextField TF_SizeManagement;
+
+    @FXML
+    private TextField TF_SizeStore;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         List<String> productTypesValues = new ArrayList<String>();
@@ -84,6 +92,11 @@ public class ProductController implements Initializable {
         ObservableList<String> productTypes = FXCollections.observableArrayList(productTypesValues);
         CBox_ProductTypeStore.setItems(productTypes);
         CBox_ProductTypeManagement.setItems(productTypes);
+        CBox_ProductTypeStore.setDisable(true);
+        TF_ProductNameStore.setDisable(true);
+        TF_QuantityStore.setDisable(true);
+        TF_PriceStore.setDisable(true);
+        TF_SizeStore.setDisable(true);
 
         LV_Store.getSelectionModel().selectedItemProperty().addListener(e-> displayProductDetailsStore((Product) LV_Store.getSelectionModel().getSelectedItem()));
         LV_Management.getSelectionModel().selectedItemProperty().addListener(e-> displayProductDetailsManagement((Product) LV_Management.getSelectionModel().getSelectedItem()));
@@ -95,6 +108,18 @@ public class ProductController implements Initializable {
             TF_ProductNameStore.setText(selectedProduct.getName());
             TF_QuantityStore.setText(Integer.toString(selectedProduct.getNbItems()));
             TF_PriceStore.setText(Double.toString(selectedProduct.getPrice()));
+            if(selectedProduct instanceof Clothes){
+                TF_SizeStore.setText(Integer.toString(((Clothes) selectedProduct).getSize()));
+                CBox_ProductTypeStore.getSelectionModel().select(0);
+            }
+            else if(selectedProduct instanceof Shoes){
+                TF_SizeStore.setText(Integer.toString(((Shoes) selectedProduct).getShoeSize()));
+                CBox_ProductTypeStore.getSelectionModel().select(1);
+            }
+            else{
+                TF_SizeStore.setText("Unique Size");
+                CBox_ProductTypeStore.getSelectionModel().select(2);
+            }
         }
     }
     private void displayProductDetailsManagement(Product selectedProduct) {
@@ -102,6 +127,18 @@ public class ProductController implements Initializable {
             TF_ProductNameManagement.setText(selectedProduct.getName());
             TF_QuantityManagement.setText(Integer.toString(selectedProduct.getNbItems()));
             TF_PriceManagement.setText(Double.toString(selectedProduct.getPrice()));
+            if(selectedProduct instanceof Clothes){
+                TF_SizeManagement.setText(Integer.toString(((Clothes) selectedProduct).getSize()));
+                CBox_ProductTypeManagement.getSelectionModel().select(0);
+            }
+            else if(selectedProduct instanceof Shoes){
+                TF_SizeManagement.setText(Integer.toString(((Shoes) selectedProduct).getShoeSize()));
+                CBox_ProductTypeManagement.getSelectionModel().select(1);
+            }
+            else{
+                TF_SizeManagement.setText("Unique Size");
+                CBox_ProductTypeManagement.getSelectionModel().select(2);
+            }
         }
     }
     public void fetchProducts(){
@@ -112,5 +149,39 @@ public class ProductController implements Initializable {
             LV_Store.setItems(products);
             LV_Management.setItems(products);
         }
+    }
+    public void clearSelection(){
+        LV_Management.getSelectionModel().clearSelection();
+        this.TF_ProductNameManagement.setText(null);
+        this.TF_QuantityManagement.setText(null);
+        this.TF_PriceManagement.setText(null);
+        this.CBox_ProductTypeManagement.getSelectionModel().clearSelection();
+    }
+    public void addProduct(){
+        if(Objects.equals(this.CBox_ProductTypeManagement.getSelectionModel().getSelectedItem(), "Clothes")){
+            Clothes c = new Clothes(TF_ProductNameManagement.getText(),Double.parseDouble(TF_PriceManagement.getText()),Integer.parseInt(TF_QuantityManagement.getText()), Integer.parseInt(TF_SizeManagement.getText()));
+            manager.addClothes(c);
+        }
+        else if(Objects.equals(this.CBox_ProductTypeManagement.getSelectionModel().getSelectedItem(), "Shoes")){
+            Shoes s = new Shoes(TF_ProductNameManagement.getText(),Double.parseDouble(TF_PriceManagement.getText()),Integer.parseInt(TF_QuantityManagement.getText()), Integer.parseInt(TF_SizeManagement.getText()));
+            manager.addShoes(s);
+        }
+        else if(Objects.equals(this.CBox_ProductTypeManagement.getSelectionModel().getSelectedItem(), "Accessories")){
+            Accessories a = new Accessories(TF_ProductNameManagement.getText(),Double.parseDouble(TF_PriceManagement.getText()),Integer.parseInt(TF_QuantityManagement.getText()));
+            manager.addAccessories(a);
+        }
+        else{
+            System.out.println("The is no product type specified, can't add the product");
+        }
+        fetchProducts();
+    }
+    public void modifyProduct(){
+
+    }
+    public void deleteProduct(){
+
+    }
+    public void addProductToCart(){
+
     }
 }

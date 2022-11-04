@@ -62,6 +62,12 @@
     -fx-text-fill: BLACK;
 }
 
+.combo-box-base:disabled,
+.list-cell:disabled
+{
+    -fx-opacity: 1;
+}
+
 .button {
     -fx-background-color: #FFB60C;
     -fx-text-fill: BLACK;
@@ -87,6 +93,9 @@
 .text-field {
     -fx-background-color: #FFB60C;
     -fx-text-fill: BLACK;
+}
+.text-field:disabled{
+    -fx-opacity: 1;
 }
 
 .check-box .box {

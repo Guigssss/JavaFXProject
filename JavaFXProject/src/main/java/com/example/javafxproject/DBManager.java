@@ -26,7 +26,6 @@ public class DBManager {
             myRs= myStmt.executeQuery(sql);
             while (myRs.next()) {
                 Accessories a = new Accessories(myRs.getString("name"), myRs.getDouble("price"), myRs.getInt("nbItems"));
-                System.out.println(a.toString());
                 productAll.add(a);
             }
             this.close(myConn, myStmt, myRs);
