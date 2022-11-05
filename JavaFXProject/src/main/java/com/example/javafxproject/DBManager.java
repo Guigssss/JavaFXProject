@@ -10,19 +10,19 @@ public class DBManager {
         Connection myConn= this.Connector();
         try {
             Statement myStmt= myConn.createStatement();
-            String sql = "select * from clothestable";
+            String sql = "SELECT * FROM clothestable";
             ResultSet myRs= myStmt.executeQuery(sql);
             while (myRs.next()) {
                 Clothes c = new Clothes(myRs.getString("name"), myRs.getDouble("price"), myRs.getInt("nbItems"), myRs.getInt("size"));
                 productAll.add(c);
             }
-            sql = "select * from shoestable";
+            sql = "SELECT * FROM shoestable";
             myRs= myStmt.executeQuery(sql);
             while (myRs.next()) {
                 Shoes s = new Shoes(myRs.getString("name"), myRs.getDouble("price"), myRs.getInt("nbItems"), myRs.getInt("shoeSize"));
                 productAll.add(s);
             }
-            sql = "select * from accessoriestable";
+            sql = "SELECT * FROM accessoriestable";
             myRs= myStmt.executeQuery(sql);
             while (myRs.next()) {
                 Accessories a = new Accessories(myRs.getString("name"), myRs.getDouble("price"), myRs.getInt("nbItems"));
@@ -59,18 +59,30 @@ public class DBManager {
             System.out.println(e.getMessage());
         }
     }
-    public void addClothes(Clothes clothe){
+    public void addProduct(Product p){
         Connection myConn=null;
         PreparedStatement myStmt = null;
         ResultSet myRs= null;
+        String sql="";
         try {
             myConn = this.Connector();
-            String sql = "INSERT INTO clothestable (name,price,nbItems,size) VALUES (?, ?, ?, ?)";
-            myStmt = myConn.prepareStatement(sql);
-            myStmt.setString(1, clothe.getName());
-            myStmt.setDouble(2, clothe.getPrice());
-            myStmt.setInt(3, clothe.getNbItems());
-            myStmt.setInt(4, clothe.getSize());
+            if(p instanceof Clothes){
+                sql = "INSERT INTO clothestable (name,price,nbItems,size) VALUES (?, ?, ?, ?)";
+                myStmt = myConn.prepareStatement(sql);
+                myStmt.setInt(4, ((Clothes)p).getSize());
+            }
+            else if(p instanceof Shoes){
+                sql = "INSERT INTO shoestable (name,price,nbItems,shoeSize) VALUES (?, ?, ?, ?)";
+                myStmt = myConn.prepareStatement(sql);
+                myStmt.setInt(4, ((Shoes)p).getShoeSize());
+            }
+            else if(p instanceof Accessories){
+                sql = "INSERT INTO accessoriestable (name,price,nbItems) VALUES (?, ?, ?)";
+                myStmt = myConn.prepareStatement(sql);
+            }
+            myStmt.setString(1, p.getName());
+            myStmt.setDouble(2, p.getPrice());
+            myStmt.setInt(3, p.getNbItems());
             myStmt.execute();
         }
         catch(Exception e){
@@ -80,63 +92,24 @@ public class DBManager {
             close(myConn,myStmt,myRs);
         }
     }
-    public void addShoes(Shoes shoe){
+    public void deleteProduct(Product p){
         Connection myConn=null;
         PreparedStatement myStmt = null;
         ResultSet myRs= null;
         try {
             myConn = this.Connector();
-            String sql = "INSERT INTO shoestable (name,price,nbItems,shoeSize) VALUES (?, ?, ?, ?)";
-            myStmt = myConn.prepareStatement(sql);
-            myStmt.setString(1, shoe.getName());
-            myStmt.setDouble(2, shoe.getPrice());
-            myStmt.setInt(3, shoe.getNbItems());
-            myStmt.setInt(4, shoe.getShoeSize());
-            myStmt.execute();
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-        finally{
-            close(myConn,myStmt,myRs);
-        }
-    }
-    public void addAccessories(Accessories accessory){
-        Connection myConn=null;
-        PreparedStatement myStmt = null;
-        ResultSet myRs= null;
-        try {
-            myConn = this.Connector();
-            String sql = "INSERT INTO accessoriestable (name,price,nbItems) VALUES (?, ?, ?)";
-            myStmt = myConn.prepareStatement(sql);
-            myStmt.setString(1, accessory.getName());
-            myStmt.setDouble(2, accessory.getPrice());
-            myStmt.setInt(3, accessory.getNbItems());
-            myStmt.execute();
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-        finally{
-            close(myConn,myStmt,myRs);
-        }
-    }
-    public void delete(String type, String name ){
-        Connection myConn=null;
-        PreparedStatement myStmt = null;
-        ResultSet myRs= null;
-        try {
-            myConn = this.Connector();
-            String sql = "DELETE FROM clothestable WHERE name = ?";
-            if(type=="Clothes");
-            else if (type=="Shoes") {
+            String sql = "";
+            if(p instanceof Clothes){
+                sql = "DELETE FROM clothestable WHERE name = ?";
+            }
+            else if (p instanceof Shoes) {
                 sql="DELETE FROM shoestable WHERE name = ?";
             }
-            else if (type=="Accessories") {
+            else if (p instanceof Accessories) {
                 sql="DELETE FROM accessoriestable WHERE name = ?";
             }
             myStmt = myConn.prepareStatement(sql);
-            myStmt.setString(1,name);
+            myStmt.setString(1,p.getName());
             myStmt.execute();
         }
         catch(Exception e){
@@ -146,7 +119,40 @@ public class DBManager {
             close(myConn,myStmt,myRs);
         }
     }
-    public void update(String type, String name,int change ,boolean ajout ){
+    public void updateProduct(Product p){
+        Connection myConn = null;
+        PreparedStatement myStmt = null;
+        ResultSet myRs= null;
+        try {
+            myConn = this.Connector();
+            String sql = "";
+            if(p instanceof Clothes){
+                sql="UPDATE clothestable SET price = ?, nbItems = ?, size = ? WHERE name = ?";
+                myStmt = myConn.prepareStatement(sql);
+                myStmt.setInt(3, ((Clothes)p).getSize());
+            }
+            else if (p instanceof Shoes) {
+                sql="UPDATE shoestable SET price = ?, nbItems = ?, shoeSize = ? WHERE name = ?";
+                myStmt = myConn.prepareStatement(sql);
+                myStmt.setInt(3, ((Shoes)p).getShoeSize());
+            }
+            else if (p instanceof Accessories) {
+                sql="UPDATE accessoriestable SET price = ?, nbItems = ? WHERE name = ?";
+                myStmt = myConn.prepareStatement(sql);
+            }
+            myStmt.setDouble(1,p.getPrice());
+            myStmt.setInt(2,p.getNbItems());
+            myStmt.setString(4,p.getName());
+            myStmt.execute();
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        finally{
+            close(myConn,myStmt,myRs);
+        }
+    }
+    public void update(String type, String name, int change ,boolean ajout){
         Connection myConn= this.Connector();
         try {
             String sql = "select name,nbItems from clothestable where name = ?";
@@ -181,7 +187,6 @@ public class DBManager {
             myStmt.execute();
             }
             this.close(myConn, myStmt, myRs);
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

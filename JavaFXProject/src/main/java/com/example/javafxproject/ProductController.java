@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import java.util.List;
 
 public class ProductController implements Initializable {
+    static double initialPrice;
     DBManager manager;
     @FXML
     private Button B_Add;
@@ -152,36 +153,71 @@ public class ProductController implements Initializable {
     }
     public void clearSelection(){
         LV_Management.getSelectionModel().clearSelection();
-        this.TF_ProductNameManagement.setText(null);
-        this.TF_QuantityManagement.setText(null);
-        this.TF_PriceManagement.setText(null);
-        this.CBox_ProductTypeManagement.getSelectionModel().clearSelection();
+        TF_ProductNameManagement.setText(null);
+        TF_QuantityManagement.setText(null);
+        TF_PriceManagement.setText(null);
+        TF_SizeManagement.setText(null);
+        CBox_ProductTypeManagement.getSelectionModel().clearSelection();
     }
     public void addProduct(){
         if(Objects.equals(this.CBox_ProductTypeManagement.getSelectionModel().getSelectedItem(), "Clothes")){
             Clothes c = new Clothes(TF_ProductNameManagement.getText(),Double.parseDouble(TF_PriceManagement.getText()),Integer.parseInt(TF_QuantityManagement.getText()), Integer.parseInt(TF_SizeManagement.getText()));
-            manager.addClothes(c);
+            manager.addProduct(c);
         }
         else if(Objects.equals(this.CBox_ProductTypeManagement.getSelectionModel().getSelectedItem(), "Shoes")){
             Shoes s = new Shoes(TF_ProductNameManagement.getText(),Double.parseDouble(TF_PriceManagement.getText()),Integer.parseInt(TF_QuantityManagement.getText()), Integer.parseInt(TF_SizeManagement.getText()));
-            manager.addShoes(s);
+            manager.addProduct(s);
         }
         else if(Objects.equals(this.CBox_ProductTypeManagement.getSelectionModel().getSelectedItem(), "Accessories")){
             Accessories a = new Accessories(TF_ProductNameManagement.getText(),Double.parseDouble(TF_PriceManagement.getText()),Integer.parseInt(TF_QuantityManagement.getText()));
-            manager.addAccessories(a);
+            manager.addProduct(a);
         }
         else{
-            System.out.println("The is no product type specified, can't add the product");
+            System.out.println("There is no product type specified, can't add the product");
         }
         fetchProducts();
     }
     public void modifyProduct(){
-
+        if(TF_ProductNameManagement!=null){
+            if(LV_Management.getSelectionModel().getSelectedItem() instanceof Clothes){
+                //manager.update("Clothes",((Product)LV_Management.getSelectionModel().getSelectedItem()).getName(),,)
+            }
+        }
     }
     public void deleteProduct(){
-
+        if(TF_ProductNameManagement != null){
+            manager.deleteProduct((Product)LV_Management.getSelectionModel().getSelectedItem());
+        }
+        else{
+            System.out.println("There is no product specify, can't delete it");
+        }
+        clearSelection();
+        fetchProducts();
     }
     public void addProductToCart(){
 
+    }
+    public void payOrder(){
+
+    }
+    public void applyDiscountCheck(){
+        Product p = (Product)LV_Store.getSelectionModel().getSelectedItem();
+        int indexSelectedItem = LV_Store.getSelectionModel().getSelectedIndex();
+        if(!LV_Store.getSelectionModel().isEmpty()){
+            if(CB_Discount.isSelected()){
+                initialPrice=p.getPrice();
+                p.applyDiscount();
+                manager.updateProduct(p);
+            }
+            else{
+                System.out.println(initialPrice);
+                p.setPrice(initialPrice);
+                System.out.println(p.getPrice());
+                manager.updateProduct(p);
+            }
+        }
+        fetchProducts();
+        LV_Store.getSelectionModel().select(indexSelectedItem);
+        displayProductDetailsStore(p);
     }
 }
