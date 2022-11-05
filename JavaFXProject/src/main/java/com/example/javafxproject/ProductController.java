@@ -7,13 +7,21 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.List;
 
 public class ProductController implements Initializable {
+
+    private static final DecimalFormat df = new DecimalFormat("0.00");
     static double initialPrice;
+    static List<Product> listProducts = new ArrayList<>();
+    static List<Integer> cartQuantity = new ArrayList<>();
+    static double totalOrder;
+    static int nbOrder;
+    static double totalCost;
     DBManager manager;
     @FXML
     private Button B_Add;
@@ -175,6 +183,8 @@ public class ProductController implements Initializable {
             else{
                 throw new IllegalArgumentException("There is no product type specified, can't add the product");
             }
+            totalCost+=(Double.parseDouble(TF_PriceManagement.getText())*0.5)*Double.parseDouble(TF_QuantityManagement.getText());
+            TF_Cost.setText(String.valueOf(df.format(totalCost)));
         }
         else{
             throw new IllegalArgumentException("There is one or more row empty");
@@ -211,10 +221,37 @@ public class ProductController implements Initializable {
         fetchProducts();
     }
     public void addProductToCart(){
-
+        Product p = (Product)LV_Store.getSelectionModel().getSelectedItem();
+        cartQuantity.add(Integer.parseInt(TF_QuantityStore.getText()));
+        listProducts.add(p);
+        totalOrder += Integer.parseInt(TF_QuantityStore.getText())*p.getPrice();
+        L_TotalStore.setText("Total : "+df.format(totalOrder)+" €");
     }
     public void payOrder(){
-
+        if(!listProducts.isEmpty()){
+            int indexSelectedItem = LV_Store.getSelectionModel().getSelectedIndex();
+            totalOrder = 0;
+            L_TotalStore.setText("Total : "+df.format(totalOrder)+" €");
+            int lengthListProducts = listProducts.size();
+            for(int i = 0; i<lengthListProducts;i++){
+                listProducts.get(0).sell(cartQuantity.get(0));
+                manager.updateProduct(listProducts.get(0));
+                if(listProducts.get(0).getNbItems()==0){
+                    listProducts.get(0).purchase(10);
+                    totalCost += 10*(listProducts.get(0).getPrice()*0.5);
+                    TF_Cost.setText(String.valueOf(df.format(totalCost)));
+                    manager.updateProduct(listProducts.get(0));
+                }
+                cartQuantity.remove(0);
+                listProducts.remove(0);
+            }
+            TF_Income.setText(String.valueOf(df.format(Product.getIncome())));
+            fetchProducts();
+            LV_Store.getSelectionModel().select(indexSelectedItem);
+            displayProductDetailsStore(LV_Store.getSelectionModel().getSelectedItem());
+            nbOrder++;
+            TF_Order.setText(String.valueOf(nbOrder));
+        }
     }
     public void applyDiscountCheck(){
         Product p = (Product)LV_Store.getSelectionModel().getSelectedItem();

@@ -10,30 +10,30 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" styleClass="background" stylesheets="@../../../css/cssJavaFXProject.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafxproject.ProductController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="background" stylesheets="@../../../css/cssJavaFXProject.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafxproject.ProductController">
    <children>
-      <TabPane prefHeight="500.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="500.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Store">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="LV_Store" layoutX="42.0" layoutY="75.0" prefHeight="350.0" prefWidth="225.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0" />
-                        <Label layoutX="117.0" layoutY="50.0" text="Product list" AnchorPane.leftAnchor="117.0" AnchorPane.rightAnchor="511.0" AnchorPane.topAnchor="50.0" />
-                        <TextField fx:id="TF_ProductNameStore" layoutX="393.0" layoutY="91.0" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="95.0" />
-                        <TextField fx:id="TF_QuantityStore" layoutX="393.0" layoutY="138.0" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="145.0" />
-                        <TextField fx:id="TF_PriceStore" layoutX="393.0" layoutY="195.0" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="195.0" />
+                        <ListView fx:id="LV_Store" layoutX="42.0" layoutY="75.0" prefHeight="350.0" prefWidth="325.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0" />
+                        <Label layoutX="117.0" layoutY="50.0" text="Product list" AnchorPane.leftAnchor="157.0" AnchorPane.rightAnchor="551.0" AnchorPane.topAnchor="50.0" />
+                        <TextField fx:id="TF_ProductNameStore" layoutX="393.0" layoutY="91.0" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="95.0" />
+                        <TextField fx:id="TF_QuantityStore" layoutX="393.0" layoutY="138.0" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="145.0" />
+                        <TextField fx:id="TF_PriceStore" layoutX="393.0" layoutY="195.0" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="195.0" />
                         <CheckBox fx:id="CB_Discount" layoutX="590.0" layoutY="199.0" mnemonicParsing="false" onAction="#applyDiscountCheck" text="Discount" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="200.0" />
-                        <Label layoutX="286.0" layoutY="96.0" text="Product name" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="100.0" />
-                        <Label layoutX="302.0" layoutY="143.0" text="Quantity" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="150.0" />
-                        <Label layoutX="316.0" layoutY="200.0" text="Price" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="200.0" />
-                        <Button fx:id="B_AddToCart" layoutX="286.0" layoutY="367.0" mnemonicParsing="false" onAction="#addProductToCart" text="Add to cart" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="290.0" />
-                        <Label fx:id="L_TotalStore" layoutX="412.0" layoutY="376.0" text="Total : " AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="425.0" />
+                        <Label layoutX="286.0" layoutY="96.0" text="Product name" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="100.0" />
+                        <Label layoutX="302.0" layoutY="143.0" text="Quantity" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="150.0" />
+                        <Label layoutX="316.0" layoutY="200.0" text="Price" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="200.0" />
+                        <Button fx:id="B_AddToCart" layoutX="286.0" layoutY="367.0" mnemonicParsing="false" onAction="#addProductToCart" text="Add to cart" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="390.0" />
+                        <Label fx:id="L_TotalStore" layoutX="412.0" layoutY="376.0" text="Total : " AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="525.0" />
                         <Button fx:id="B_PayStore" layoutX="573.0" layoutY="367.0" mnemonicParsing="false" onAction="#payOrder" text="PAY" AnchorPane.bottomAnchor="70.0" AnchorPane.rightAnchor="70.0" />
-                        <Label layoutX="292.0" layoutY="243.0" text="Product Type" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="300.0" />
-                        <ComboBox fx:id="CBox_ProductTypeStore" layoutX="400.0" layoutY="239.0" prefWidth="150.0" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="295.0" />
-                        <Label layoutX="303.0" layoutY="224.0" text="Size" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="250.0" />
-                        <TextField fx:id="TF_SizeStore" layoutX="403.0" layoutY="245.0" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="245.0" />
+                        <Label layoutX="292.0" layoutY="243.0" text="Product Type" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="300.0" />
+                        <ComboBox fx:id="CBox_ProductTypeStore" layoutX="400.0" layoutY="239.0" prefWidth="150.0" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="295.0" />
+                        <Label layoutX="303.0" layoutY="224.0" text="Size" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="250.0" />
+                        <TextField fx:id="TF_SizeStore" layoutX="403.0" layoutY="245.0" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="245.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -41,22 +41,22 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="LV_Management" layoutX="30.0" layoutY="233.0" prefHeight="350.0" prefWidth="225.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0" />
-                        <Label layoutX="106.0" layoutY="57.0" text="Product list" AnchorPane.leftAnchor="117.0" AnchorPane.topAnchor="50.0" />
-                        <Label layoutX="315.0" layoutY="86.0" text="Product name" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="100.0" />
-                        <Label layoutX="323.0" layoutY="142.0" text="Quantity" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="150.0" />
-                        <Label layoutX="343.0" layoutY="191.0" text="Price" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="200.0" />
-                        <TextField fx:id="TF_ProductNameManagement" layoutX="445.0" layoutY="82.0" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="95.0" />
-                        <TextField fx:id="TF_QuantityManagement" layoutX="445.0" layoutY="138.0" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="145.0" />
-                        <TextField fx:id="TF_PriceManagement" layoutX="439.0" layoutY="187.0" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="195.0" />
-                        <Button fx:id="B_Add" layoutX="323.0" layoutY="358.0" mnemonicParsing="false" onAction="#addProduct" prefHeight="30.0" prefWidth="100.0" text="ADD" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="290.0" />
-                        <Button fx:id="B_Modify" layoutX="425.0" layoutY="363.0" mnemonicParsing="false" onAction="#modifyProduct" prefHeight="30.0" prefWidth="100.0" text="MODIFY" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="420.0" />
-                        <Button fx:id="B_Delete" layoutX="567.0" layoutY="358.0" mnemonicParsing="false" onAction="#deleteProduct" prefHeight="30.0" prefWidth="100.0" text="DELETE" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="550.0" />
+                        <ListView fx:id="LV_Management" layoutX="30.0" layoutY="233.0" prefHeight="350.0" prefWidth="325.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0" />
+                        <Label layoutX="106.0" layoutY="57.0" text="Product list" AnchorPane.leftAnchor="167.0" AnchorPane.topAnchor="50.0" />
+                        <Label layoutX="315.0" layoutY="86.0" text="Product name" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="100.0" />
+                        <Label layoutX="323.0" layoutY="142.0" text="Quantity" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="150.0" />
+                        <Label layoutX="343.0" layoutY="191.0" text="Price" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="200.0" />
+                        <TextField fx:id="TF_ProductNameManagement" layoutX="445.0" layoutY="82.0" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="95.0" />
+                        <TextField fx:id="TF_QuantityManagement" layoutX="445.0" layoutY="138.0" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="145.0" />
+                        <TextField fx:id="TF_PriceManagement" layoutX="439.0" layoutY="187.0" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="195.0" />
+                        <Button fx:id="B_Add" layoutX="323.0" layoutY="358.0" mnemonicParsing="false" onAction="#addProduct" prefHeight="30.0" prefWidth="100.0" text="ADD" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="390.0" />
+                        <Button fx:id="B_Modify" layoutX="425.0" layoutY="363.0" mnemonicParsing="false" onAction="#modifyProduct" prefHeight="30.0" prefWidth="100.0" text="MODIFY" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="520.0" />
+                        <Button fx:id="B_Delete" layoutX="567.0" layoutY="358.0" mnemonicParsing="false" onAction="#deleteProduct" prefHeight="30.0" prefWidth="100.0" text="DELETE" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="650.0" />
                         <Button fx:id="B_Clear" layoutX="449.0" layoutY="251.0" mnemonicParsing="false" onAction="#clearSelection" text="CLEAR" AnchorPane.bottomAnchor="90.0" AnchorPane.rightAnchor="170.0" />
-                        <ComboBox fx:id="CBox_ProductTypeManagement" layoutX="400.0" layoutY="239.0" prefWidth="150.0" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="295.0" />
-                        <Label layoutX="292.0" layoutY="243.0" text="Product Type" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="300.0" />
-                        <TextField fx:id="TF_SizeManagement" layoutX="401.0" layoutY="238.0" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="245.0" />
-                        <Label layoutX="292.0" layoutY="262.0" text="Size" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="250.0" />
+                        <ComboBox fx:id="CBox_ProductTypeManagement" layoutX="400.0" layoutY="239.0" prefWidth="150.0" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="295.0" />
+                        <Label layoutX="292.0" layoutY="243.0" text="Product Type" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="300.0" />
+                        <TextField fx:id="TF_SizeManagement" layoutX="401.0" layoutY="238.0" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="245.0" />
+                        <Label layoutX="292.0" layoutY="262.0" text="Size" AnchorPane.leftAnchor="390.0" AnchorPane.topAnchor="250.0" />
                      </children></AnchorPane>
             </content>
           </Tab>

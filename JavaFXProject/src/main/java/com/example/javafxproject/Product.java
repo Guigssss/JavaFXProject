@@ -43,7 +43,7 @@ public abstract class Product implements Discount{
         }
     }
     public void setNbItems(int nbItems) {
-        if(nbItems>0){
+        if(nbItems>=0){
             this.nbItems=nbItems;
         }
         else{
@@ -60,12 +60,13 @@ public abstract class Product implements Discount{
                 '}';
     }
     public void sell(int nbItems) throws IllegalArgumentException{
-        if(this.nbItems-nbItems>0){
+        if(this.nbItems-nbItems>=0){
             this.nbItems -= nbItems;
             income+=nbItems*this.price;
         }
         else{
-            throw new IllegalArgumentException("Product Unavailable");
+            int missing = nbItems-this.nbItems;
+            throw new IllegalArgumentException("Product Unavailable : " + this.name + " missing quantity : " + missing);
         }
     }
     public void purchase(int nbItems){
