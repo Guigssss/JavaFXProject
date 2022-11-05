@@ -31,7 +31,6 @@ public class DBManager {
             this.close(myConn, myStmt, myRs);
             return productAll;
         } catch (SQLException e) {
-
             e.printStackTrace();
         }
         return null;
@@ -130,19 +129,21 @@ public class DBManager {
                 sql="UPDATE clothestable SET price = ?, nbItems = ?, size = ? WHERE name = ?";
                 myStmt = myConn.prepareStatement(sql);
                 myStmt.setInt(3, ((Clothes)p).getSize());
+                myStmt.setString(4,p.getName());
             }
             else if (p instanceof Shoes) {
                 sql="UPDATE shoestable SET price = ?, nbItems = ?, shoeSize = ? WHERE name = ?";
                 myStmt = myConn.prepareStatement(sql);
                 myStmt.setInt(3, ((Shoes)p).getShoeSize());
+                myStmt.setString(4,p.getName());
             }
             else if (p instanceof Accessories) {
                 sql="UPDATE accessoriestable SET price = ?, nbItems = ? WHERE name = ?";
                 myStmt = myConn.prepareStatement(sql);
+                myStmt.setString(3,p.getName());
             }
             myStmt.setDouble(1,p.getPrice());
             myStmt.setInt(2,p.getNbItems());
-            myStmt.setString(4,p.getName());
             myStmt.execute();
         }
         catch(Exception e){
@@ -152,43 +153,4 @@ public class DBManager {
             close(myConn,myStmt,myRs);
         }
     }
-    /*public void update(String type, String name, int change ,boolean ajout){
-        Connection myConn= this.Connector();
-        try {
-            String sql = "select name,nbItems from clothestable where name = ?";
-            if(type=="Shoes"){
-                sql="select name,nbItems from shoestable where name = ?";
-            } else if (type=="Accessories") {
-                sql="select name,nbItems from accessoriestable where name = ?";
-            }
-            PreparedStatement myStmt= myConn.prepareStatement(sql);
-            myStmt.setString(1,name);
-            ResultSet myRs= myStmt.executeQuery();
-            while(myRs.next()) {
-                if (ajout) {
-                    change += myRs.getInt("nbItems");
-                } else {
-                    if ((myRs.getInt("nbItems") - change) < 0) {
-                        System.out.println("Manque de stock");
-                        change = (myRs.getInt("nbItems"));
-                    } else {
-                        change = myRs.getInt("nbItems") - change;
-                    }
-                }
-            String sql2="update clothestable set nbItems = ? where name = ?";
-            if(type=="shoes"){
-                sql2="update shoestable set nbItems = ? where name = ?";
-            } else if (type=="accessories") {
-                sql2="update accessoriestable set nbItems = ? where name = ?";
-            }
-            myStmt=myConn.prepareStatement(sql2);
-            myStmt.setInt(1,change);
-            myStmt.setString(2,name);
-            myStmt.execute();
-            }
-            this.close(myConn, myStmt, myRs);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }*/
 }

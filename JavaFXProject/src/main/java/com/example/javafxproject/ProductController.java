@@ -95,7 +95,6 @@ public class ProductController implements Initializable {
         CBox_ProductTypeManagement.setItems(productTypes);
         CBox_ProductTypeStore.setDisable(true);
         TF_ProductNameStore.setDisable(true);
-        TF_QuantityStore.setDisable(true);
         TF_PriceStore.setDisable(true);
         TF_SizeStore.setDisable(true);
 
@@ -160,7 +159,7 @@ public class ProductController implements Initializable {
         CBox_ProductTypeManagement.getSelectionModel().clearSelection();
     }
     public void addProduct() throws IllegalArgumentException{
-        if(TF_ProductNameManagement != null && TF_PriceManagement!=null && TF_SizeManagement != null && TF_SizeManagement != null && !CBox_ProductTypeManagement.getSelectionModel().isEmpty()){
+        if(TF_ProductNameManagement != null && TF_PriceManagement!=null && TF_SizeManagement != null && TF_SizeManagement != null){
             if(Objects.equals(this.CBox_ProductTypeManagement.getSelectionModel().getSelectedItem(), "Clothes")){
                 Clothes c = new Clothes(TF_ProductNameManagement.getText(),Double.parseDouble(TF_PriceManagement.getText()),Integer.parseInt(TF_QuantityManagement.getText()), Integer.parseInt(TF_SizeManagement.getText()));
                 manager.addProduct(c);
@@ -182,9 +181,9 @@ public class ProductController implements Initializable {
         }
         fetchProducts();
     }
-    public void modifyProduct(){
-        Product p = (Product)LV_Management.getSelectionModel().getSelectedItem();
+    public void modifyProduct() throws  IllegalArgumentException{
         if(TF_ProductNameManagement!=null){
+            Product p = (Product)LV_Management.getSelectionModel().getSelectedItem();
             p.setPrice(Double.parseDouble(TF_PriceManagement.getText()));
             p.setNbItems(Integer.parseInt(TF_QuantityManagement.getText()));
             if(p instanceof Clothes){
@@ -201,12 +200,12 @@ public class ProductController implements Initializable {
         clearSelection();
         fetchProducts();
     }
-    public void deleteProduct(){
+    public void deleteProduct() throws  IllegalArgumentException{
         if(TF_ProductNameManagement != null){
             manager.deleteProduct((Product)LV_Management.getSelectionModel().getSelectedItem());
         }
         else{
-            System.out.println("There is no product specify, can't delete it");
+            throw  new IllegalArgumentException("There is no product specify, can't delete it");
         }
         clearSelection();
         fetchProducts();
