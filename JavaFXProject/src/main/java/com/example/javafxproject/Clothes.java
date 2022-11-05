@@ -4,12 +4,7 @@ public class Clothes extends Product {
     private int size;
     public Clothes(String name, double price, int nbItems, int size) throws IllegalArgumentException {
         super(name, price, nbItems);
-        if(size > 34 && size < 54 ){
-            this.size = size;
-        }
-        else{
-            throw new IllegalArgumentException("Wrong Size");
-        }
+        setSize(size);
     }
     public int getSize() {
         return size;
@@ -19,7 +14,7 @@ public class Clothes extends Product {
             this.size = size;
         }
         else{
-            throw new IllegalArgumentException("Wrong Size");
+            throw new IllegalArgumentException("Wrong Size, size can only be between 34 and 54");
         }
     }
     @Override

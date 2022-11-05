@@ -159,30 +159,47 @@ public class ProductController implements Initializable {
         TF_SizeManagement.setText(null);
         CBox_ProductTypeManagement.getSelectionModel().clearSelection();
     }
-    public void addProduct(){
-        if(Objects.equals(this.CBox_ProductTypeManagement.getSelectionModel().getSelectedItem(), "Clothes")){
-            Clothes c = new Clothes(TF_ProductNameManagement.getText(),Double.parseDouble(TF_PriceManagement.getText()),Integer.parseInt(TF_QuantityManagement.getText()), Integer.parseInt(TF_SizeManagement.getText()));
-            manager.addProduct(c);
-        }
-        else if(Objects.equals(this.CBox_ProductTypeManagement.getSelectionModel().getSelectedItem(), "Shoes")){
-            Shoes s = new Shoes(TF_ProductNameManagement.getText(),Double.parseDouble(TF_PriceManagement.getText()),Integer.parseInt(TF_QuantityManagement.getText()), Integer.parseInt(TF_SizeManagement.getText()));
-            manager.addProduct(s);
-        }
-        else if(Objects.equals(this.CBox_ProductTypeManagement.getSelectionModel().getSelectedItem(), "Accessories")){
-            Accessories a = new Accessories(TF_ProductNameManagement.getText(),Double.parseDouble(TF_PriceManagement.getText()),Integer.parseInt(TF_QuantityManagement.getText()));
-            manager.addProduct(a);
+    public void addProduct() throws IllegalArgumentException{
+        if(TF_ProductNameManagement != null && TF_PriceManagement!=null && TF_SizeManagement != null && TF_SizeManagement != null && !CBox_ProductTypeManagement.getSelectionModel().isEmpty()){
+            if(Objects.equals(this.CBox_ProductTypeManagement.getSelectionModel().getSelectedItem(), "Clothes")){
+                Clothes c = new Clothes(TF_ProductNameManagement.getText(),Double.parseDouble(TF_PriceManagement.getText()),Integer.parseInt(TF_QuantityManagement.getText()), Integer.parseInt(TF_SizeManagement.getText()));
+                manager.addProduct(c);
+            }
+            else if(Objects.equals(this.CBox_ProductTypeManagement.getSelectionModel().getSelectedItem(), "Shoes")){
+                Shoes s = new Shoes(TF_ProductNameManagement.getText(),Double.parseDouble(TF_PriceManagement.getText()),Integer.parseInt(TF_QuantityManagement.getText()), Integer.parseInt(TF_SizeManagement.getText()));
+                manager.addProduct(s);
+            }
+            else if(Objects.equals(this.CBox_ProductTypeManagement.getSelectionModel().getSelectedItem(), "Accessories")){
+                Accessories a = new Accessories(TF_ProductNameManagement.getText(),Double.parseDouble(TF_PriceManagement.getText()),Integer.parseInt(TF_QuantityManagement.getText()));
+                manager.addProduct(a);
+            }
+            else{
+                throw new IllegalArgumentException("There is no product type specified, can't add the product");
+            }
         }
         else{
-            System.out.println("There is no product type specified, can't add the product");
+            throw new IllegalArgumentException("There is one or more row empty");
         }
         fetchProducts();
     }
     public void modifyProduct(){
+        Product p = (Product)LV_Management.getSelectionModel().getSelectedItem();
         if(TF_ProductNameManagement!=null){
-            if(LV_Management.getSelectionModel().getSelectedItem() instanceof Clothes){
-                //manager.update("Clothes",((Product)LV_Management.getSelectionModel().getSelectedItem()).getName(),,)
+            p.setPrice(Double.parseDouble(TF_PriceManagement.getText()));
+            p.setNbItems(Integer.parseInt(TF_QuantityManagement.getText()));
+            if(p instanceof Clothes){
+                ((Clothes)p).setSize(Integer.parseInt(TF_SizeManagement.getText()));
             }
+            if(p instanceof Shoes){
+                ((Shoes)p).setShoeSize(Integer.parseInt(TF_SizeManagement.getText()));
+            }
+            manager.updateProduct(p);
         }
+        else{
+            throw new IllegalArgumentException("There is no product specify, can't modify it");
+        }
+        clearSelection();
+        fetchProducts();
     }
     public void deleteProduct(){
         if(TF_ProductNameManagement != null){
@@ -210,9 +227,7 @@ public class ProductController implements Initializable {
                 manager.updateProduct(p);
             }
             else{
-                System.out.println(initialPrice);
                 p.setPrice(initialPrice);
-                System.out.println(p.getPrice());
                 manager.updateProduct(p);
             }
         }

@@ -9,18 +9,8 @@ public abstract class Product implements Discount{
     static int cpt = 0;
     public Product(String name, double price, int nbItems)throws IllegalArgumentException{
         this.name = name;
-        if(price>0){
-            this.price= price;
-        }
-        else{
-            throw new IllegalArgumentException("Negative price !");
-        }
-        if(nbItems>0){
-            this.nbItems=nbItems;
-        }
-        else{
-            throw new IllegalArgumentException("Negative quantity ! ");
-        }
+        setPrice(price);
+        setNbItems(nbItems);
         number=++cpt;
     }
     public int getNumber() {
@@ -57,7 +47,7 @@ public abstract class Product implements Discount{
             this.nbItems=nbItems;
         }
         else{
-            throw new IllegalArgumentException("Negative quantity ! ");
+            throw new IllegalArgumentException("Negative quantity !");
         }
     }
     @Override

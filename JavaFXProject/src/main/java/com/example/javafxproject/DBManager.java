@@ -152,7 +152,7 @@ public class DBManager {
             close(myConn,myStmt,myRs);
         }
     }
-    public void update(String type, String name, int change ,boolean ajout){
+    /*public void update(String type, String name, int change ,boolean ajout){
         Connection myConn= this.Connector();
         try {
             String sql = "select name,nbItems from clothestable where name = ?";
@@ -190,5 +190,5 @@ public class DBManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
