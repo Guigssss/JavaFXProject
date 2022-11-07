@@ -35,6 +35,6 @@ PRIMARY KEY (id)
 );
 
 INSERT INTO clothestable (name,price,nbItems,size) VALUE ("Polo", 19.99, 5, 40);
-INSERT INTO shoestable (name,price,nbItems,shoeSize) VALUE ("Nike", 99.99, 2, 41);
-INSERT INTO accessoriestable (name,price,nbItems) VALUE ("Ceinture Hermès", 999.99,1);
+INSERT INTO shoestable (name,price,nbItems,shoeSize) VALUE ("Baskets", 69.99, 2, 41);
+INSERT INTO accessoriestable (name,price,nbItems) VALUE ("Ceinture", 44.99,1);
 INSERT INTO clothestable (name,price,nbItems,size) VALUE ("T-Shirt", 12.99, 4, 42);
