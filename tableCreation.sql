@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS shoestable(
 id INTEGER NOT NULL auto_increment ,
 name VARCHAR(40),
 price DOUBLE,
+discountPrice DOUBLE,
 nbItems INTEGER,
 shoeSize INTEGER,
 reduc DOUBLE DEFAULT 20,

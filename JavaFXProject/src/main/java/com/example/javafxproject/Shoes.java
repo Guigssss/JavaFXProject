@@ -24,6 +24,6 @@ public class Shoes extends Product {
 
     @Override
     public void applyDiscount() {
-        super.setPrice(Math.round(super.getPrice()*0.8*100.0)/100.0);
+        super.setDiscountPrice(Math.round(super.getPrice()*0.8*100.0)/100.0);
     }
 }

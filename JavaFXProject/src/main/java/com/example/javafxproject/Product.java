@@ -4,6 +4,7 @@ public abstract class Product implements Discount{
     private int number;
     private String name;
     private double price;
+    private double discountPrice;
     private int nbItems;
     static double income = 0;
     static int cpt = 0;
@@ -21,6 +22,9 @@ public abstract class Product implements Discount{
     }
     public double getPrice() {
         return price;
+    }
+    public double getDiscountPrice(){
+        return this.discountPrice;
     }
     public int getNbItems() {
         return nbItems;
@@ -42,6 +46,9 @@ public abstract class Product implements Discount{
             throw new IllegalArgumentException("Negative price !");
         }
     }
+    public void setDiscountPrice(double discountPrice){
+        this.discountPrice = discountPrice;
+    }
     public void setNbItems(int nbItems) {
         if(nbItems>=0){
             this.nbItems=nbItems;
@@ -59,10 +66,15 @@ public abstract class Product implements Discount{
                 ", nbItems=" + nbItems +
                 '}';
     }
-    public void sell(int nbItems) throws IllegalArgumentException{
+    public void sell(int nbItems, boolean isDiscounted) throws IllegalArgumentException{
         if(this.nbItems-nbItems>=0){
             this.nbItems -= nbItems;
-            income+=nbItems*this.price;
+            if(isDiscounted){
+                income+=nbItems*this.discountPrice;
+            }
+            else{
+                income+=nbItems*this.price;
+            }
         }
         else{
             int missing = nbItems-this.nbItems;

@@ -12,6 +12,6 @@ public class Accessories extends Product{
 
     @Override
     public void applyDiscount() {
-        super.setPrice(Math.round(super.getPrice()*0.5*100.0)/100.0);
+        super.setDiscountPrice(Math.round(super.getPrice()*0.5*100.0)/100.0);
     }
 }
