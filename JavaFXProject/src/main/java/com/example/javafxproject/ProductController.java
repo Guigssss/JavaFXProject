@@ -8,18 +8,19 @@ import javafx.scene.control.*;
 
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.List;
+import java.util.*;
 
 public class ProductController implements Initializable {
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
     static double initialPrice;
+    /*
     static List<Product> listProducts = new ArrayList<>();
     static List<Integer> cartQuantity = new ArrayList<>();
     static List<Boolean> isDiscounted = new ArrayList<>();
+     */
+    static List<paycart> cart = new ArrayList<>();
+
     static double totalOrder;
     static int nbOrder;
     static double totalCost;
@@ -224,36 +225,32 @@ public class ProductController implements Initializable {
     }
     public void addProductToCart(){
         Product p = (Product)LV_Store.getSelectionModel().getSelectedItem();
-        cartQuantity.add(Integer.parseInt(TF_QuantityStore.getText()));
-        listProducts.add(p);
         if(CB_Discount.isSelected()){
             totalOrder += Integer.parseInt(TF_QuantityStore.getText())*p.getDiscountPrice();
-            isDiscounted.add(true);
+            cart.add(new paycart(p,Integer.parseInt(TF_QuantityStore.getText()),true));
         }
         else{
             totalOrder += Integer.parseInt(TF_QuantityStore.getText())*p.getPrice();
-            isDiscounted.add(false);
+            cart.add(new paycart(p,Integer.parseInt(TF_QuantityStore.getText()),false));
         }
         L_TotalStore.setText("Total : "+df.format(totalOrder)+" €");
     }
     public void payOrder(){
-        if(!listProducts.isEmpty()){
+        if(!cart.isEmpty()){
             int indexSelectedItem = LV_Store.getSelectionModel().getSelectedIndex();
             totalOrder = 0;
             L_TotalStore.setText("Total : "+df.format(totalOrder)+" €");
-            int lengthListProducts = listProducts.size();
+            int lengthListProducts = cart.size();
             for(int i = 0; i<lengthListProducts;i++){
-                listProducts.get(0).sell(cartQuantity.get(0), isDiscounted.get(0));
-                manager.updateProduct(listProducts.get(0));
-                if(listProducts.get(0).getNbItems()==0){
-                    listProducts.get(0).purchase(10);
-                    totalCost += 10*(listProducts.get(0).getPrice()*0.5);
+                cart.get(0).getP().sell(cart.get(0).getCartquantity(),cart.get(0).getDiscounted());
+                manager.updateProduct(cart.get(0).getP());
+                if(cart.get(0).getP().getNbItems()==0){
+                    cart.get(0).getP().purchase(10);
+                    totalCost += 10*(cart.get(0).getP().getPrice()*0.5);
                     TF_Cost.setText(String.valueOf(df.format(totalCost)));
-                    manager.updateProduct(listProducts.get(0));
+                    manager.updateProduct(cart.get(0).getP());
                 }
-                cartQuantity.remove(0);
-                isDiscounted.remove(0);
-                listProducts.remove(0);
+                cart.remove(0);
             }
             TF_Income.setText(String.valueOf(df.format(Product.getIncome())));
             fetchProducts();
@@ -263,24 +260,6 @@ public class ProductController implements Initializable {
             TF_Order.setText(String.valueOf(nbOrder));
         }
     }
-    /*public void applyDiscountCheck(){
-        Product p = (Product)LV_Store.getSelectionModel().getSelectedItem();
-        int indexSelectedItem = LV_Store.getSelectionModel().getSelectedIndex();
-        if(!LV_Store.getSelectionModel().isEmpty()){
-            if(CB_Discount.isSelected()){
-                initialPrice=p.getPrice();
-                p.applyDiscount();
-                manager.updateProduct(p);
-            }
-            else{
-                p.setPrice(initialPrice);
-                manager.updateProduct(p);
-            }
-        }
-        fetchProducts();
-        LV_Store.getSelectionModel().select(indexSelectedItem);
-        displayProductDetailsStore(p);
-    }*/
     public void applyDiscountCheck(){
         Product p = (Product)LV_Store.getSelectionModel().getSelectedItem();
         if(!LV_Store.getSelectionModel().isEmpty()){
