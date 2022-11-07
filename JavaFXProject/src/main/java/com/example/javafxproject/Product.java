@@ -9,18 +9,8 @@ public abstract class Product implements Discount{
     static int cpt = 0;
     public Product(String name, double price, int nbItems)throws IllegalArgumentException{
         this.name = name;
-        if(price>0){
-            this.price= price;
-        }
-        else{
-            throw new IllegalArgumentException("Negative price !");
-        }
-        if(nbItems>0){
-            this.nbItems=nbItems;
-        }
-        else{
-            throw new IllegalArgumentException("Negative quantity ! ");
-        }
+        setPrice(price);
+        setNbItems(nbItems);
         number=++cpt;
     }
     public int getNumber() {
@@ -53,11 +43,11 @@ public abstract class Product implements Discount{
         }
     }
     public void setNbItems(int nbItems) {
-        if(nbItems>0){
+        if(nbItems>=0){
             this.nbItems=nbItems;
         }
         else{
-            throw new IllegalArgumentException("Negative quantity ! ");
+            throw new IllegalArgumentException("Negative quantity !");
         }
     }
     @Override
@@ -70,12 +60,13 @@ public abstract class Product implements Discount{
                 '}';
     }
     public void sell(int nbItems) throws IllegalArgumentException{
-        if(this.nbItems-nbItems>0){
+        if(this.nbItems-nbItems>=0){
             this.nbItems -= nbItems;
             income+=nbItems*this.price;
         }
         else{
-            throw new IllegalArgumentException("Product Unavailable");
+            int missing = nbItems-this.nbItems;
+            throw new IllegalArgumentException("Product Unavailable : " + this.name + " missing quantity : " + missing);
         }
     }
     public void purchase(int nbItems){

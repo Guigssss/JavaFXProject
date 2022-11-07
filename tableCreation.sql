@@ -10,7 +10,6 @@ price DOUBLE,
 nbItems INTEGER,
 size INTEGER,
 reduc DOUBLE DEFAULT 30,
-indic INTEGER DEFAULT 1,
 PRIMARY KEY (id)
 );
 
@@ -22,17 +21,20 @@ price DOUBLE,
 nbItems INTEGER,
 shoeSize INTEGER,
 reduc DOUBLE DEFAULT 20,
-indic INTEGER DEFAULT 2,
 PRIMARY KEY (id)
 );
 
 DROP TABLE IF EXISTS accessoriestable;
 CREATE TABLE IF NOT EXISTS accessoriestable(
-id INTEGER NOT NULL auto_increment ,
+id INTEGER NOT NULL auto_increment,
 name VARCHAR(40),
 price DOUBLE,
 nbItems INTEGER,
 reduc DOUBLE DEFAULT 50,
-indic INTEGER DEFAULT 3,
 PRIMARY KEY (id)
 );
+
+INSERT INTO clothestable (name,price,nbItems,size) VALUE ("Polo", 19.99, 5, 40);
+INSERT INTO shoestable (name,price,nbItems,shoeSize) VALUE ("Nike", 99.99, 2, 41);
+INSERT INTO accessoriestable (name,price,nbItems) VALUE ("Ceinture Hermès", 999.99,1);
+INSERT INTO clothestable (name,price,nbItems,size) VALUE ("T-Shirt", 12.99, 4, 42);

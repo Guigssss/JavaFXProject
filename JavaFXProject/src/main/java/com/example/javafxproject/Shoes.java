@@ -4,12 +4,7 @@ public class Shoes extends Product {
     private int shoeSize;
     public Shoes(String name, double price, int nbItems, int shoeSize) throws IllegalArgumentException {
         super(name, price, nbItems);
-        if(shoeSize > 34 && shoeSize < 54 ){
-            this.shoeSize = shoeSize;
-        }
-        else{
-            throw new IllegalArgumentException("Wrong Shoe Size !");
-        }
+        setShoeSize(shoeSize);
     }
     public int getShoeSize() {
         return shoeSize;
@@ -19,16 +14,12 @@ public class Shoes extends Product {
             this.shoeSize = shoeSize;
         }
         else{
-            throw new IllegalArgumentException("Wrong Shoe Size !");
+            throw new IllegalArgumentException("Wrong Shoe Size, size can only be between 34 and 54");
         }
     }
     @Override
     public String toString() {
-        return "Shoes{" +"name='" + super.getName() + '\'' +
-                ", price=" + super.getPrice() +
-                ", nbItems=" + super.getNbItems() +
-                ", size=" + this.shoeSize +
-                '}';
+        return super.getName()+" - Price : "+super.getPrice()+" € Qty : "+super.getNbItems()+" Size : "+this.shoeSize;
     }
 
     @Override

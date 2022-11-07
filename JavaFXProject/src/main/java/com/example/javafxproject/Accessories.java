@@ -7,10 +7,7 @@ public class Accessories extends Product{
     }
     @Override
     public String toString() {
-        return "Accessories{" +"name='" + super.getName() + '\'' +
-                ", price=" + super.getPrice() +
-                ", nbItems=" + super.getNbItems() +
-                '}';
+        return super.getName()+" - Price : "+super.getPrice()+" € Qty : "+super.getNbItems();
     }
 
     @Override
